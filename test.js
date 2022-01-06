@@ -8,5 +8,6 @@ console.log(Block.genesis().toString());
 
 const firstBlock = Block.mineBlock(Block.genesis(), 'R$100');
 
-console.log(firstBlock.toString());
 
+
+console.log(firstBlock.toString());
