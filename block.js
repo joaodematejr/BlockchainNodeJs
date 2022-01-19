@@ -35,11 +35,16 @@ class Block {
         return new this(timestamp, lastHash, hash, data)
     }
 
+    //SHA - 256
+
     static hash(timestamp, lastHash, data) {
         return SHA256(`${timestamp}${lastHash}${data}`).toString()
     }
 
-    //SHA - 256
+    static blockHash(block) {
+        const { timestamp, lastHash, data } = block;
+        return Block.hash(timestamp, lastHash, data)
+    }
 
 }
 
