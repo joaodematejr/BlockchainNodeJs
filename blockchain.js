@@ -24,6 +24,18 @@ class Blockchain {
         }
         return true;
     }
+
+    replaceChain(newChain) {
+        if (newChain.length <= this.chain.length) {
+            console.log('Receive Chain is Not Longer Than current Chain');
+            return;
+        } else if (!this.isValidChain(newChain)) {
+            console.log('The Receive Chain is not valid');
+            return;
+        }
+        console.log('Replacing Chain with new Chain');
+        this.chain = newChain;
+    }
 }
 
 module.exports = Blockchain;
