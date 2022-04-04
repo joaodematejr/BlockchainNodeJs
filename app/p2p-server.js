@@ -2,7 +2,7 @@ const WebSocket = require('ws')
 const P2P_PORT = process.env.P2P_PORT || 5001
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : []
 
-//HTTP_PORT = 3002 P2P_PORT = 5003 PEERS = "ws://localhost:5001,ws://localhost:5002" npm run dev
+//HTTP_PORT=3002 P2P_PORT=5003 PEERS="ws://localhost:5001,ws://localhost:5002" npm run dev
 
 class P2pServer {
     constructor(blockchain) {
@@ -11,7 +11,7 @@ class P2pServer {
     }
 
     listen() {
-        const server = new WebSocket.server({ port: P2P_PORT })
+        const server = new WebSocket.Server({ port: P2P_PORT })
         server.on('connection', (socket) => this.connectSocket(socket))
         this.connectToPeers()
         console.log(`Listening for peer-to-peer connections on: ${P2P_PORT}`)
@@ -30,4 +30,4 @@ class P2pServer {
     }
 }
 
-module.exports = P2pServer;
+module.exports = P2pServer
