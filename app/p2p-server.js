@@ -7,18 +7,27 @@ const peers = process.env.PEERS ? process.env.PEERS.split(',') : []
 class P2pServer {
     constructor(blockchain) {
         this.blockchain = blockchain
-        this.sockets = [];
+        this.sockets = []
+    }
+
+    listen() {
+        const server = new WebSocket.server({ port: P2P_PORT })
+        server.on('connection', (socket) => this.connectSocket(socket))
+        this.connectToPeers()
+        console.log(`Listening for peer-to-peer connections on: ${P2P_PORT}`)
+    }
+
+    connectToPeers() {
+        peers.forEach((peer) => {
+            const socket = new WebSocket(peer)
+            socket.on('open', () => this.connectSocket(socket))
+        })
+    }
+
+    connectSocket(socket) {
+        this.sockets.push(socket)
+        console.log('Connected to a new peer: ' + socket.url)
     }
 }
 
-listen() {
-    const server = new WebSocket.server({ port: P2P_PORT });
-    server.on('connection', socket => this.connectSocket(socket));
-    this.connectToPeers();
-    console.log(`Listening for peer-to-peer connections on: ${P2P_PORT}`);
-}
-
-connectSocket(socket) {
-    this.sockets.push(socket);
-    console.log('Connected to a new peer: ' + socket.url);
-}
+module.exports = P2pServer;
