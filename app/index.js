@@ -17,7 +17,7 @@ app.get('/blocks', (req, res) => {
 
 app.post('/mine', (req, res) => {
     const block = bc.addBlock(req.body.data);
-    console.log('nem block', block.toString());
+    console.log('New Block', block.toString());
     res.redirect('/blocks');
 });
 

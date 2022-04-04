@@ -27,7 +27,20 @@ class P2pServer {
     connectSocket(socket) {
         this.sockets.push(socket)
         console.log('Connected to a new peer: ' + socket.url)
+
+        this.messageHandler(socket)
+        socket.send(JSON.stringify(this.blockchain.chain))
     }
+
+    messageHandler(socket) {
+        socket.on('message', (message) => {
+            const data = JSON.parse(message)
+            console.log('data', data);
+            //this.blockchain.replaceChain(message.chain)
+        })
+    }
+
+
 }
 
 module.exports = P2pServer
